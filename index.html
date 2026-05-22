@@ -9,20 +9,13 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#F7F4EE;
-  --surface:#FFFFFF;
-  --surface2:#F0ECE4;
-  --ink:#1A1714;
-  --ink2:#5C5650;
-  --ink3:#9A9490;
-  --accent:#2D5A3D;
-  --accent-light:#EAF2EC;
-  --accent2:#C4873A;
-  --accent2-light:#FBF3E8;
-  --wrong:#8B2B2B;
-  --wrong-light:#FAEAEA;
-  --border:#DDD8CF;
-  --radius:12px;
+  --bg:#F7F4EE;--surface:#FFFFFF;--surface2:#F0ECE4;
+  --ink:#1A1714;--ink2:#5C5650;--ink3:#9A9490;
+  --accent:#2D5A3D;--accent-light:#EAF2EC;
+  --accent2:#C4873A;--accent2-light:#FBF3E8;
+  --wrong:#8B2B2B;--wrong-light:#FAEAEA;
+  --prof:#1A2E4A;--prof-light:#E8EFF7;--prof-border:#B8CCDF;
+  --border:#DDD8CF;--radius:12px;
   --serif:'DM Serif Display',Georgia,serif;
   --sans:'DM Sans',system-ui,sans-serif;
 }
@@ -36,6 +29,19 @@ header h1{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weigh
 header h1 em{font-style:italic;color:var(--accent);}
 header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
 
+/* STUDENT ENTRY SCREEN */
+#entry-screen{padding:2rem 0;}
+.entry-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2.4rem 2.4rem 2rem;max-width:480px;margin:0 auto;}
+.entry-card h2{font-family:var(--serif);font-size:1.5rem;font-weight:400;margin-bottom:.4rem;}
+.entry-card p{font-size:.88rem;color:var(--ink2);margin-bottom:1.6rem;}
+.field-label{font-size:.82rem;font-weight:600;color:var(--ink2);text-transform:uppercase;letter-spacing:.07em;margin-bottom:.4rem;display:block;}
+.field-input{width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:.95rem;color:var(--ink);background:var(--bg);outline:none;transition:border .18s;}
+.field-input:focus{border-color:var(--accent);}
+.field-input.error{border-color:var(--wrong);}
+.field-error{font-size:.78rem;color:var(--wrong);margin-top:.3rem;display:none;}
+.entry-info{background:var(--accent2-light);border:1px solid #E8C990;border-radius:8px;padding:.8rem 1rem;font-size:.82rem;color:#6B4A18;margin:1.2rem 0 1.6rem;}
+.entry-row{display:flex;gap:1rem;flex-wrap:wrap;margin-top:1.4rem;}
+
 /* CASE STUDY */
 .case-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:2.5rem;position:relative;overflow:hidden;}
 .case-box::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent2);}
@@ -44,6 +50,12 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
 .case-box p{font-size:.92rem;color:var(--ink2);margin-bottom:.7rem;}
 .case-box p:last-child{margin-bottom:0;}
 .case-box strong{color:var(--ink);font-weight:600;}
+
+/* STUDENT BADGE */
+.student-badge{display:flex;align-items:center;gap:.7rem;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.6rem 1rem;margin-bottom:1.5rem;font-size:.85rem;}
+.student-badge .ava{width:32px;height:32px;border-radius:50%;background:var(--accent);color:#fff;display:flex;align-items:center;justify-content:center;font-size:.8rem;font-weight:600;flex-shrink:0;}
+.student-badge span{color:var(--ink2);}
+.student-badge strong{color:var(--ink);}
 
 /* PROGRESS */
 .progress-bar{background:var(--surface2);border-radius:20px;height:6px;margin-bottom:2rem;overflow:hidden;}
@@ -81,6 +93,10 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
 .btn-primary:hover{background:#234A31;}
 .btn-secondary{background:var(--surface2);color:var(--ink2);border:1px solid var(--border);}
 .btn-secondary:hover{background:var(--border);}
+.btn-prof{background:var(--prof);color:#fff;}
+.btn-prof:hover{background:#0F1E30;}
+.btn-download{background:var(--accent2);color:#fff;}
+.btn-download:hover{background:#A0701E;}
 .btn-row{display:flex;gap:.75rem;margin-top:1.2rem;flex-wrap:wrap;}
 
 /* RESULTS */
@@ -96,6 +112,11 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
 .stat-val.red{color:var(--wrong);}
 .stat-val.amber{color:var(--accent2);}
 .stat-label{font-size:.78rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem;}
+
+/* DOWNLOAD BOX */
+.download-box{background:var(--accent2-light);border:1px solid #E8C990;border-radius:var(--radius);padding:1.4rem 1.6rem;margin:1.5rem 0;display:flex;align-items:center;justify-content:space-between;gap:1rem;flex-wrap:wrap;}
+.download-box-text h4{font-size:.95rem;font-weight:600;color:#6B4A18;margin-bottom:.2rem;}
+.download-box-text p{font-size:.82rem;color:#8B6020;}
 
 /* CHART */
 .chart-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin:1.5rem 0;}
@@ -128,14 +149,66 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
 /* RESTART */
 .restart-row{text-align:center;padding:2rem 0 1rem;}
 
-@media(max-width:520px){
+/* ===== PROFESSOR PANEL ===== */
+#prof-panel{display:none;background:var(--bg);min-height:100vh;}
+.prof-page{max-width:900px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+.prof-header{background:var(--prof);color:#fff;border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:2rem;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:1rem;}
+.prof-header h2{font-family:var(--serif);font-size:1.6rem;font-weight:400;}
+.prof-header p{font-size:.85rem;opacity:.75;margin-top:.2rem;}
+.prof-toolbar{display:flex;align-items:center;gap:.8rem;flex-wrap:wrap;margin-bottom:1.5rem;}
+.prof-search{flex:1;min-width:180px;padding:.6rem .9rem;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:.88rem;background:var(--surface);outline:none;}
+.prof-search:focus{border-color:var(--prof);}
+.prof-stats{display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;margin-bottom:1.5rem;}
+.prof-stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1rem;text-align:center;}
+.prof-stat-val{font-family:var(--serif);font-size:1.6rem;color:var(--prof);}
+.prof-stat-lbl{font-size:.72rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:.2rem;}
+.prof-table-wrap{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;margin-bottom:1.5rem;}
+.prof-table{width:100%;border-collapse:collapse;font-size:.85rem;}
+.prof-table th{background:var(--surface2);padding:.7rem 1rem;text-align:left;font-size:.75rem;font-weight:600;text-transform:uppercase;letter-spacing:.07em;color:var(--ink3);border-bottom:1px solid var(--border);}
+.prof-table td{padding:.75rem 1rem;border-bottom:1px solid var(--border);vertical-align:middle;}
+.prof-table tr:last-child td{border-bottom:none;}
+.prof-table tr:hover td{background:var(--bg);}
+.pill{display:inline-block;font-size:.72rem;font-weight:600;padding:2px 9px;border-radius:20px;}
+.pill-green{background:var(--accent-light);color:var(--accent);}
+.pill-red{background:var(--wrong-light);color:var(--wrong);}
+.pill-amber{background:var(--accent2-light);color:#7A5010;}
+.detail-row{display:none;background:var(--bg);}
+.detail-row td{padding:.6rem 1rem 1rem 2.5rem;}
+.detail-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:.4rem;margin-top:.4rem;}
+.dg-cell{background:var(--surface);border:1px solid var(--border);border-radius:6px;padding:.4rem .5rem;text-align:center;font-size:.72rem;}
+.dg-cell .dg-q{color:var(--ink3);margin-bottom:2px;}
+.dg-cell .dg-a{font-weight:600;}
+.dg-cell.ok{border-color:#B8D8C0;background:var(--accent-light);}
+.dg-cell.ok .dg-a{color:var(--accent);}
+.dg-cell.no{border-color:#DBA9A9;background:var(--wrong-light);}
+.dg-cell.no .dg-a{color:var(--wrong);}
+.prof-empty{text-align:center;padding:3rem;color:var(--ink3);font-size:.9rem;}
+.prof-chart-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem;}
+.prof-chart-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem;}
+.prof-chart-box h4{font-family:var(--serif);font-size:1rem;font-weight:400;margin-bottom:1rem;color:var(--ink);}
+.prof-chart-wrap{position:relative;height:200px;}
+
+.password-shield{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:2rem;max-width:380px;margin:4rem auto;text-align:center;}
+.password-shield h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:.5rem;}
+.password-shield p{font-size:.85rem;color:var(--ink2);margin-bottom:1.2rem;}
+.password-shield input{width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:8px;font-family:var(--sans);font-size:.95rem;margin-bottom:.8rem;outline:none;text-align:center;letter-spacing:.12em;}
+.password-shield input:focus{border-color:var(--prof);}
+.pw-error{font-size:.8rem;color:var(--wrong);margin-top:-.4rem;margin-bottom:.6rem;display:none;}
+
+@media(max-width:600px){
   .stats-grid{grid-template-columns:1fr 1fr;}
-  .case-box{padding:1.4rem 1.2rem;}
-  .question-card{padding:1.4rem 1.2rem;}
+  .prof-stats{grid-template-columns:1fr 1fr;}
+  .prof-chart-row{grid-template-columns:1fr;}
+  .detail-grid{grid-template-columns:repeat(3,1fr);}
+  .case-box,.question-card{padding:1.4rem 1.2rem;}
+  .entry-card{padding:1.6rem 1.4rem;}
 }
 </style>
 </head>
 <body>
+
+<!-- ===== QUIZ APP ===== -->
+<div id="quiz-app">
 <div class="page">
 
 <header>
@@ -144,29 +217,58 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
   <p>Estudo de caso: Contador de MPE no setor de alimentos e bebidas — 6 questões com 4 alternativas</p>
 </header>
 
-<!-- CASE STUDY -->
-<div class="case-box">
-  <div class="case-label">📋 Estudo de Caso</div>
-  <h2>Sabores do Cerrado Ltda. — A chegada do novo contador</h2>
-  <p>A <strong>Sabores do Cerrado Ltda.</strong> é uma pequena empresa familiar localizada em Cuiabá–MT, com 11 anos de atividade e 22 funcionários. Produz conservas, polpas de frutas e geleias artesanais vendidas para supermercados regionais e feiras do produtor. O faturamento anual gira em torno de <strong>R$ 2,4 milhões</strong>.</p>
-  <p>Em março de 2025, a empresa contratou <strong>Mariana</strong>, recém-formada em Ciências Contábeis, como sua primeira contadora interna. Ao assumir o cargo, Mariana encontrou um cenário desafiador: nenhum orçamento formal, fluxo de caixa feito em caderno, sem indicadores de desempenho e decisões tomadas "de cabeça" pelos sócios. A empresa havia encerrado 2024 com prejuízo operacional de R$ 87 mil, apesar de ter crescido 14% em faturamento.</p>
-  <p>Os sócios pedem à Mariana que apresente, em 60 dias, um diagnóstico e um plano de ação. Ela decide estruturar a <strong>contabilidade gerencial</strong> como base para um <strong>planejamento estratégico</strong> formal. As questões a seguir acompanham as decisões de Mariana ao longo desse processo.</p>
-</div>
-
-<!-- PROGRESS -->
-<div id="progress-wrap">
-  <div class="progress-label">
-    <span id="progress-text">Questão 1 de 6</span>
-    <strong id="progress-pct">0%</strong>
+<!-- ENTRY SCREEN -->
+<div id="entry-screen">
+  <div class="entry-card">
+    <h2>Identificação do aluno</h2>
+    <p>Preencha os dados abaixo antes de iniciar. Eles serão registrados no arquivo de correção gerado ao final.</p>
+    <div style="margin-bottom:1rem;">
+      <label class="field-label" for="inp-name">Nome completo</label>
+      <input class="field-input" id="inp-name" type="text" placeholder="Ex.: João da Silva" autocomplete="name">
+      <div class="field-error" id="err-name">Por favor, informe seu nome completo.</div>
+    </div>
+    <div style="margin-bottom:1rem;">
+      <label class="field-label" for="inp-ra">RA / Matrícula <span style="font-weight:400;text-transform:none;letter-spacing:0">(opcional)</span></label>
+      <input class="field-input" id="inp-ra" type="text" placeholder="Ex.: 2024001234">
+    </div>
+    <div class="entry-info">
+      📄 Ao concluir o quiz, um arquivo <strong>JSON</strong> com seu nome, respostas e pontuação será gerado automaticamente para entrega ao professor.
+    </div>
+    <div class="entry-row">
+      <button class="btn btn-primary" onclick="startQuiz()">Iniciar exercício →</button>
+      <button class="btn btn-secondary" onclick="goProf()">Painel do professor</button>
+    </div>
   </div>
-  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
 </div>
 
-<!-- QUESTIONS -->
-<div id="quiz-section"></div>
+<!-- QUIZ SCREEN (hidden initially) -->
+<div id="quiz-screen" style="display:none;">
+  <div class="student-badge" id="student-badge">
+    <div class="ava" id="student-ava">?</div>
+    <div><span>Respondendo como </span><strong id="student-name-display">—</strong></div>
+  </div>
+
+  <div class="case-box">
+    <div class="case-label">📋 Estudo de Caso</div>
+    <h2>Sabores do Cerrado Ltda. — A chegada do novo contador</h2>
+    <p>A <strong>Sabores do Cerrado Ltda.</strong> é uma pequena empresa familiar localizada em Cuiabá–MT, com 11 anos de atividade e 22 funcionários. Produz conservas, polpas de frutas e geleias artesanais vendidas para supermercados regionais e feiras do produtor. O faturamento anual gira em torno de <strong>R$ 2,4 milhões</strong>.</p>
+    <p>Em março de 2025, a empresa contratou <strong>Mariana</strong>, recém-formada em Ciências Contábeis, como sua primeira contadora interna. Ao assumir o cargo, Mariana encontrou um cenário desafiador: nenhum orçamento formal, fluxo de caixa feito em caderno, sem indicadores de desempenho e decisões tomadas "de cabeça" pelos sócios. A empresa havia encerrado 2024 com prejuízo operacional de R$ 87 mil, apesar de ter crescido 14% em faturamento.</p>
+    <p>Os sócios pedem à Mariana que apresente, em 60 dias, um diagnóstico e um plano de ação. Ela decide estruturar a <strong>contabilidade gerencial</strong> como base para um <strong>planejamento estratégico</strong> formal. As questões a seguir acompanham as decisões de Mariana ao longo desse processo.</p>
+  </div>
+
+  <div id="progress-wrap">
+    <div class="progress-label">
+      <span id="progress-text">Questão 1 de 6</span>
+      <strong id="progress-pct">0%</strong>
+    </div>
+    <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+  </div>
+
+  <div id="quiz-section"></div>
+</div>
 
 <!-- RESULTS (hidden initially) -->
-<div id="results-section">
+<div id="results-section" style="display:none;">
   <div class="results-header">
     <h2>Resultado Final</h2>
     <div class="score-big" id="score-display">0/6</div>
@@ -174,18 +276,18 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
   </div>
 
   <div class="stats-grid">
-    <div class="stat-card">
-      <div class="stat-val green" id="stat-correct">0</div>
-      <div class="stat-label">Corretas</div>
+    <div class="stat-card"><div class="stat-val green" id="stat-correct">0</div><div class="stat-label">Corretas</div></div>
+    <div class="stat-card"><div class="stat-val red" id="stat-wrong">0</div><div class="stat-label">Incorretas</div></div>
+    <div class="stat-card"><div class="stat-val amber" id="stat-pct">0%</div><div class="stat-label">Aproveitamento</div></div>
+  </div>
+
+  <!-- DOWNLOAD BOX -->
+  <div class="download-box">
+    <div class="download-box-text">
+      <h4>📥 Arquivo de correção gerado</h4>
+      <p>Baixe e entregue ao professor conforme orientação da disciplina.</p>
     </div>
-    <div class="stat-card">
-      <div class="stat-val red" id="stat-wrong">0</div>
-      <div class="stat-label">Incorretas</div>
-    </div>
-    <div class="stat-card">
-      <div class="stat-val amber" id="stat-pct">0%</div>
-      <div class="stat-label">Aproveitamento</div>
-    </div>
+    <button class="btn btn-download" id="btn-download" onclick="downloadResult()">Baixar arquivo .json</button>
   </div>
 
   <div class="chart-section">
@@ -198,171 +300,277 @@ header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
     <div class="chart-wrapper"><canvas id="barChart"></canvas></div>
   </div>
 
-  <!-- CITATIONS -->
   <div class="citations-section">
     <h3>Reflexões teóricas sobre planejamento estratégico</h3>
-
     <div class="citation-card">
       <div class="citation-quote">"O planejamento não diz respeito a decisões futuras, mas às implicações futuras de decisões presentes."</div>
       <div class="citation-author">Peter Drucker</div>
       <div class="citation-context">A afirmação sublinha que o planejamento estratégico, como praticado por Mariana ao estruturar o orçamento e o fluxo de caixa da Sabores do Cerrado, não é exercício de adivinhação — é a disciplina de pensar hoje as consequências do que se decide fazer (ou não fazer). Drucker reforça que a contabilidade gerencial é o instrumento que transforma intenções em decisões rastreáveis.</div>
     </div>
-
     <div class="citation-card">
       <div class="citation-quote">"Planejamento estratégico é o processo administrativo que proporciona sustentação metodológica para se estabelecer a melhor direção a ser seguida pela empresa, visando ao otimizado grau de interação com os fatores externos — não controláveis — e atuando de forma inovadora e diferenciada."</div>
       <div class="citation-author">Djalma de Pinho Rebouças de Oliveira</div>
-      <div class="citation-context">Rebouças situa o planejamento estratégico como metodologia gerencial — não como intuição. A análise SWOT que Mariana propõe para a Sabores do Cerrado é exatamente esse instrumento de leitura do ambiente externo (volatilidade de matéria-prima, concorrência regional) e interno (capacidade produtiva, ausência de controles), traduzida em escolhas deliberadas.</div>
+      <div class="citation-context">Rebouças situa o planejamento estratégico como metodologia gerencial — não como intuição. A análise SWOT que Mariana propõe para a Sabores do Cerrado é exatamente esse instrumento de leitura do ambiente externo e interno, traduzida em escolhas deliberadas.</div>
     </div>
-
     <div class="citation-card">
       <div class="citation-quote">"A estratégia define como a organização pretende alcançar seus objetivos, quais os recursos necessários e o que deve ser feito para tornar esses objetivos realidade."</div>
       <div class="citation-author">Idalberto Chiavenato</div>
-      <div class="citation-context">Chiavenato conecta estratégia à operação — exatamente o desafio de Mariana: traduzir o crescimento de 14% em faturamento em resultado positivo, identificando onde os recursos foram mal alocados. O Balanced Scorecard e os KPIs que ela implementa são a linguagem que converte a intenção estratégica dos sócios em métricas acompanháveis pelo dia a dia contábil.</div>
+      <div class="citation-context">Chiavenato conecta estratégia à operação — exatamente o desafio de Mariana: traduzir o crescimento de 14% em faturamento em resultado positivo. O BSC e os KPIs que ela implementa são a linguagem que converte a intenção estratégica dos sócios em métricas acompanháveis.</div>
     </div>
   </div>
 
-  <!-- GABARITO -->
   <div class="gabarito-section">
     <h3>Gabarito comentado</h3>
     <div id="gabarito-list"></div>
   </div>
 
   <div class="restart-row">
-    <button class="btn btn-primary" onclick="restartQuiz()">↩ Reiniciar exercício</button>
+    <button class="btn btn-secondary" onclick="restartQuiz()">↩ Reiniciar exercício</button>
   </div>
 </div>
 
 </div><!-- .page -->
+</div><!-- #quiz-app -->
+
+<!-- ===== PROFESSOR PANEL ===== -->
+<div id="prof-panel">
+  <div id="prof-login">
+    <div class="page">
+      <header>
+        <div class="tag" style="background:var(--prof);">Painel do Professor</div>
+        <h1>Correção &<br><em>Acompanhamento</em></h1>
+        <p>Área restrita — insira a senha para acessar os registros dos alunos.</p>
+      </header>
+      <div class="password-shield">
+        <h3>Acesso restrito</h3>
+        <p>Senha padrão: <strong>prof2025</strong><br><span style="font-size:.78rem;color:var(--ink3)">(altere no código antes de publicar)</span></p>
+        <input type="password" id="prof-pw" placeholder="••••••••" onkeydown="if(event.key==='Enter')checkPw()">
+        <div class="pw-error" id="pw-error">Senha incorreta. Tente novamente.</div>
+        <button class="btn btn-prof" style="width:100%" onclick="checkPw()">Entrar</button>
+        <button class="btn btn-secondary" style="width:100%;margin-top:.5rem" onclick="backToQuiz()">← Voltar ao quiz</button>
+      </div>
+    </div>
+  </div>
+
+  <div id="prof-dashboard" style="display:none;">
+  <div class="prof-page">
+
+    <div class="prof-header">
+      <div>
+        <h2>Painel de correção</h2>
+        <p>Quiz: Contabilidade Gerencial & Planejamento Estratégico — Nível Básico</p>
+      </div>
+      <div style="display:flex;gap:.6rem;flex-wrap:wrap">
+        <button class="btn btn-download" onclick="exportAllCSV()">Exportar turma .csv</button>
+        <button class="btn" style="background:rgba(255,255,255,.15);color:#fff;border:1px solid rgba(255,255,255,.3)" onclick="clearAllData()">Limpar registros</button>
+        <button class="btn btn-secondary" onclick="backToQuiz()">← Sair</button>
+      </div>
+    </div>
+
+    <div class="prof-stats" id="prof-stats-grid"></div>
+
+    <div class="prof-chart-row">
+      <div class="prof-chart-box">
+        <h4>Aproveitamento da turma por tema</h4>
+        <div class="prof-chart-wrap"><canvas id="profRadar"></canvas></div>
+      </div>
+      <div class="prof-chart-box">
+        <h4>Distribuição de notas</h4>
+        <div class="prof-chart-wrap"><canvas id="profDist"></canvas></div>
+      </div>
+    </div>
+
+    <div class="prof-toolbar">
+      <input class="prof-search" id="prof-search" type="text" placeholder="Buscar aluno pelo nome ou RA..." oninput="renderTable()">
+      <label style="font-size:.82rem;color:var(--ink2);display:flex;align-items:center;gap:.4rem;">
+        <input type="checkbox" id="filter-wrong" onchange="renderTable()"> Somente com erros
+      </label>
+      <button class="btn btn-secondary" onclick="loadFromFile()">📂 Carregar arquivo .json</button>
+      <input type="file" id="file-input" accept=".json" style="display:none" onchange="handleFileLoad(event)">
+    </div>
+
+    <div class="prof-table-wrap">
+      <table class="prof-table">
+        <thead>
+          <tr>
+            <th style="width:30px"></th>
+            <th>Aluno</th>
+            <th>RA / Matrícula</th>
+            <th>Data/Hora</th>
+            <th>Acertos</th>
+            <th>Nota</th>
+            <th>Situação</th>
+          </tr>
+        </thead>
+        <tbody id="prof-tbody"></tbody>
+      </table>
+      <div class="prof-empty" id="prof-empty" style="display:none">
+        Nenhum registro encontrado. Os alunos precisam baixar e entregar o arquivo .json gerado ao final do quiz.
+      </div>
+    </div>
+
+  </div>
+  </div><!-- prof-dashboard -->
+</div><!-- prof-panel -->
 
 <script>
-const questions = [
+const QUESTIONS = [
   {
-    theme: "Diagnóstico inicial",
-    text: "Ao analisar os registros da Sabores do Cerrado, Mariana percebe que a empresa cresceu em faturamento mas fechou no prejuízo. Qual ferramenta de contabilidade gerencial ela deve priorizar primeiro para entender onde o dinheiro está sendo perdido?",
-    options: [
+    theme:"Diagnóstico inicial",
+    text:"Ao analisar os registros da Sabores do Cerrado, Mariana percebe que a empresa cresceu em faturamento mas fechou no prejuízo. Qual ferramenta de contabilidade gerencial ela deve priorizar primeiro para entender onde o dinheiro está sendo perdido?",
+    options:[
       "Elaborar imediatamente um planejamento estratégico de cinco anos com metas de expansão.",
       "Construir uma análise de custos e calcular a margem de contribuição por linha de produto.",
       "Contratar uma auditoria externa para verificar possíveis irregularidades fiscais.",
       "Aumentar o preço dos produtos para compensar o prejuízo registrado em 2024."
     ],
-    correct: 1,
-    feedback: {
-      correct: "Correto! A margem de contribuição revela quanto cada produto contribui para cobrir os custos fixos. Sem esse diagnóstico, qualquer planejamento estratégico fica sem base financeira real — exatamente o que os artigos estudados apontam como pré-requisito da integração entre contabilidade gerencial e estratégia.",
-      wrong: "A alternativa correta é B. Antes de qualquer estratégia de longo prazo, Mariana precisa entender a estrutura de custos. A análise de margem de contribuição é o ponto de partida da contabilidade gerencial para diagnóstico de resultado."
+    correct:1,
+    feedback:{
+      correct:"Correto! A margem de contribuição revela quanto cada produto contribui para cobrir os custos fixos. Sem esse diagnóstico, qualquer planejamento estratégico fica sem base financeira real.",
+      wrong:"A alternativa correta é B. Antes de qualquer estratégia de longo prazo, Mariana precisa entender a estrutura de custos pela análise de margem de contribuição."
     },
-    ref: "Beuren, Souza e Feuser (2017); Artigo 1 — seção 4, Resultados e Discussão."
+    ref:"Beuren, Souza e Feuser (2017); Artigo 1 — seção 4."
   },
   {
-    theme: "Ferramentas gerenciais",
-    text: "Os sócios pedem previsibilidade financeira para os próximos 90 dias, pois há vencimentos bancários importantes nesse período. Qual instrumento da contabilidade gerencial atende diretamente essa necessidade?",
-    options: [
+    theme:"Ferramentas gerenciais",
+    text:"Os sócios pedem previsibilidade financeira para os próximos 90 dias, pois há vencimentos bancários importantes nesse período. Qual instrumento da contabilidade gerencial atende diretamente essa necessidade?",
+    options:[
       "Balanced Scorecard (BSC), com indicadores de aprendizado e crescimento.",
       "Análise SWOT atualizada com as ameaças do mercado regional.",
       "Fluxo de caixa projetado para os próximos 90 dias, revisado mensalmente.",
       "Relatório de participação de mercado frente aos concorrentes locais."
     ],
-    correct: 2,
-    feedback: {
-      correct: "Correto! O fluxo de caixa projetado é o instrumento direto para previsibilidade de curto prazo. O Artigo 1 relata exatamente essa prática na empresa estudada, que passou a projetar o caixa para 90 dias e aumentou em 18% a previsibilidade financeira.",
-      wrong: "A alternativa correta é C. O fluxo de caixa projetado responde à pergunta 'teremos dinheiro para pagar as contas nos próximos meses?'. As demais alternativas são ferramentas valiosas, mas não endereçam a necessidade imediata de previsibilidade de caixa."
+    correct:2,
+    feedback:{
+      correct:"Correto! O fluxo de caixa projetado é o instrumento direto para previsibilidade de curto prazo — prática relatada no Artigo 1 que aumentou em 18% a previsibilidade financeira da empresa estudada.",
+      wrong:"A alternativa correta é C. O fluxo de caixa projetado responde à pergunta 'teremos dinheiro para pagar as contas nos próximos meses?'."
     },
-    ref: "Artigo 1 — seção 4; Padoveze (2010)."
+    ref:"Artigo 1 — seção 4; Padoveze (2010)."
   },
   {
-    theme: "Planejamento estratégico",
-    text: "Para estruturar o planejamento estratégico formal da Sabores do Cerrado, Mariana propõe uma análise do ambiente interno e externo. Qual ferramenta é mais indicada para isso no contexto de uma pequena empresa?",
-    options: [
+    theme:"Planejamento estratégico",
+    text:"Para estruturar o planejamento estratégico formal da Sabores do Cerrado, Mariana propõe uma análise do ambiente interno e externo. Qual ferramenta é mais indicada para isso no contexto de uma pequena empresa?",
+    options:[
       "Análise SWOT, identificando forças, fraquezas, oportunidades e ameaças.",
       "Diagrama de Gantt para controle do cronograma de produção.",
       "Demonstração do Resultado do Exercício (DRE) do último trimestre.",
       "Planilha de controle de estoque com alertas de reposição automática."
     ],
-    correct: 0,
-    feedback: {
-      correct: "Correto! A matriz SWOT é o instrumento clássico de análise de ambiente para o planejamento estratégico. O Artigo 1 mostra que a empresa estudada a utiliza semestralmente, e o Artigo 2 reforça que sem leitura do ambiente interno e externo o planejamento torna-se meramente teórico.",
-      wrong: "A alternativa correta é A. As outras ferramentas citadas têm utilidade operacional, mas a SWOT é o instrumento que conecta o diagnóstico ambiental ao planejamento estratégico — pilar central dos dois artigos estudados."
+    correct:0,
+    feedback:{
+      correct:"Correto! A matriz SWOT é o instrumento clássico de análise de ambiente para o planejamento estratégico — utilizada semestralmente pela empresa do Artigo 1 e destacada no Artigo 2.",
+      wrong:"A alternativa correta é A. A SWOT conecta o diagnóstico ambiental ao planejamento estratégico — pilar central dos dois artigos."
     },
-    ref: "Oliveira Júnior et al. (2023); Artigo 2 — seção 2."
+    ref:"Oliveira Júnior et al. (2023); Artigo 2 — seção 2."
   },
   {
-    theme: "Gestão por resultados",
-    text: "Mariana quer monitorar se as ações do planejamento estão gerando resultado ao longo do tempo. Qual prática de gestão por resultados ela deve adotar para garantir esse acompanhamento contínuo?",
-    options: [
+    theme:"Gestão por resultados",
+    text:"Mariana quer monitorar se as ações do planejamento estão gerando resultado ao longo do tempo. Qual prática de gestão por resultados ela deve adotar para garantir esse acompanhamento contínuo?",
+    options:[
       "Realizar uma única reunião de avaliação ao final do ano fiscal.",
       "Definir indicadores-chave de desempenho (KPIs) e revisar o orçamento trimestralmente.",
       "Delegar o acompanhamento dos resultados exclusivamente ao escritório contábil externo.",
       "Aguardar a publicação do balanço patrimonial anual para tomar decisões estratégicas."
     ],
-    correct: 1,
-    feedback: {
-      correct: "Correto! A gestão por resultados exige monitoramento contínuo — não apenas ao final do ano. KPIs periódicos e revisão orçamentária trimestral são práticas que o Artigo 2 destaca como essenciais para que o planejamento se traduza em resultados reais.",
-      wrong: "A alternativa correta é B. Aguardar o encerramento do exercício para avaliar resultados é exatamente o oposto do que a literatura recomenda. O Artigo 2 enfatiza que o ciclo de aprendizagem estratégica exige dados contábeis frequentes alimentando revisões contínuas."
+    correct:1,
+    feedback:{
+      correct:"Correto! KPIs periódicos e revisão orçamentária trimestral são práticas que o Artigo 2 destaca como essenciais para que o planejamento se traduza em resultados reais.",
+      wrong:"A alternativa correta é B. O Artigo 2 enfatiza que o ciclo de aprendizagem estratégica exige dados contábeis frequentes alimentando revisões contínuas."
     },
-    ref: "Ramos (2023); Artigo 2 — seção 3; Souza e Santos (2024)."
+    ref:"Ramos (2023); Artigo 2 — seção 3; Souza e Santos (2024)."
   },
   {
-    theme: "Liderança e cultura organizacional",
-    text: "Os sócios mostram resistência às mudanças propostas por Mariana, argumentando que 'sempre fizeram assim'. De acordo com os artigos estudados, qual fator organizacional ela deve abordar para que o planejamento estratégico seja efetivo?",
-    options: [
+    theme:"Liderança e cultura",
+    text:"Os sócios mostram resistência às mudanças propostas por Mariana, argumentando que 'sempre fizeram assim'. De acordo com os artigos estudados, qual fator organizacional ela deve abordar para que o planejamento estratégico seja efetivo?",
+    options:[
       "Impor as ferramentas gerenciais independentemente da concordância dos sócios.",
       "Abandonar o planejamento formal e manter os processos informais existentes.",
       "Trabalhar a cultura organizacional e engajar a liderança como mediadora das mudanças.",
       "Terceirizar toda a gestão financeira para uma consultoria externa especializada."
     ],
-    correct: 2,
-    feedback: {
-      correct: "Correto! O Artigo 2 dedica uma seção inteira ao papel da liderança e da cultura organizacional. Sem o engajamento dos sócios, as ferramentas gerenciais não produzem efeito — cultura e estratégia se inter-relacionam e a liderança é o elo entre discurso estratégico e ações cotidianas.",
-      wrong: "A alternativa correta é C. A literatura é clara: o planejamento estratégico por si só não garante resultados. A mediação humana da liderança e a cultura organizacional condicionam a efetividade de qualquer ferramenta gerencial."
+    correct:2,
+    feedback:{
+      correct:"Correto! O Artigo 2 dedica uma seção ao papel da liderança e da cultura organizacional: sem o engajamento dos sócios, as ferramentas gerenciais não produzem efeito.",
+      wrong:"A alternativa correta é C. A mediação humana da liderança e a cultura organizacional condicionam a efetividade de qualquer ferramenta gerencial."
     },
-    ref: "Cândido (2023); Leite (2024); Artigo 2 — seção 4."
+    ref:"Cândido (2023); Leite (2024); Artigo 2 — seção 4."
   },
   {
-    theme: "Sustentabilidade financeira",
-    text: "Após três meses de trabalho, Mariana apresenta os primeiros resultados: redução de desperdícios na produção e melhoria no giro de estoque. Os sócios perguntam: qual é o papel da contabilidade gerencial no longo prazo da empresa? A resposta mais adequada é:",
-    options: [
+    theme:"Sustentabilidade financeira",
+    text:"Após três meses de trabalho, Mariana apresenta os primeiros resultados positivos. Os sócios perguntam: qual é o papel da contabilidade gerencial no longo prazo da empresa? A resposta mais adequada é:",
+    options:[
       "A contabilidade gerencial serve apenas para cumprir obrigações fiscais e legais.",
       "Ela deve ser usada apenas em momentos de crise, como aconteceu em 2024.",
       "É um instrumento prospectivo que orienta decisões estratégicas e fortalece a sustentabilidade financeira.",
       "Seu papel se limita ao registro dos fatos passados para prestação de contas aos sócios."
     ],
-    correct: 2,
-    feedback: {
-      correct: "Correto! Esta é a conclusão central de ambos os artigos: a contabilidade gerencial não deve ser vista apenas como registro do passado ou obrigação fiscal, mas como instrumento prospectivo que orienta decisões estratégicas e sustenta a saúde financeira da organização a longo prazo.",
-      wrong: "A alternativa correta é C. Ambos os artigos convergem para essa conclusão: a contabilidade gerencial é ferramenta de futuro, não de passado. Usá-la apenas em crises ou para fins fiscais desperdiça seu maior valor — apoiar decisões estratégicas contínuas."
+    correct:2,
+    feedback:{
+      correct:"Correto! Esta é a conclusão central de ambos os artigos: a contabilidade gerencial é instrumento prospectivo que orienta decisões estratégicas e sustenta a saúde financeira a longo prazo.",
+      wrong:"A alternativa correta é C. Ambos os artigos convergem: a contabilidade gerencial é ferramenta de futuro, não de passado."
     },
-    ref: "Costa e Ferreira (2024); Artigo 1 — seção 5; Artigo 2 — seção 5."
+    ref:"Costa e Ferreira (2024); Artigo 1 — seção 5; Artigo 2 — seção 5."
   }
 ];
 
-const themeLabels = questions.map(q => q.theme);
-let userAnswers = Array(questions.length).fill(null);
-let answeredCount = 0;
-let chartRadar = null;
-let chartBar = null;
+const LETTERS = ['A','B','C','D'];
+const PROF_PASSWORD = 'prof2025';
+const STORAGE_KEY = 'quiz_cont_gerencial_results';
 
+let studentName = '';
+let studentRA = '';
+let userAnswers = Array(QUESTIONS.length).fill(null);
+let answeredCount = 0;
+let chartRadar = null, chartBar = null;
+let profRadarChart = null, profDistChart = null;
+let resultPayload = null;
+
+// ===== ENTRY =====
+function startQuiz() {
+  const nameEl = document.getElementById('inp-name');
+  const errEl = document.getElementById('err-name');
+  const v = nameEl.value.trim();
+  if (!v) {
+    nameEl.classList.add('error');
+    errEl.style.display = 'block';
+    nameEl.focus();
+    return;
+  }
+  nameEl.classList.remove('error');
+  errEl.style.display = 'none';
+  studentName = v;
+  studentRA = document.getElementById('inp-ra').value.trim();
+
+  document.getElementById('entry-screen').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'block';
+
+  const initials = studentName.split(' ').map(w=>w[0]).join('').slice(0,2).toUpperCase();
+  document.getElementById('student-ava').textContent = initials;
+  document.getElementById('student-name-display').textContent = studentName;
+
+  buildQuiz();
+}
+
+// ===== QUIZ =====
 function buildQuiz() {
   const section = document.getElementById('quiz-section');
   section.innerHTML = '';
-  questions.forEach((q, qi) => {
+  QUESTIONS.forEach((q, qi) => {
     const card = document.createElement('div');
-    card.className = 'question-card' + (qi === 0 ? ' active' : '');
-    card.id = 'q-card-' + qi;
-    const letters = ['A','B','C','D'];
+    card.className = 'question-card' + (qi===0?' active':'');
+    card.id = 'q-card-'+qi;
     card.innerHTML = `
-      <div class="q-number">Questão ${qi+1} de ${questions.length} — ${q.theme}</div>
+      <div class="q-number">Questão ${qi+1} de ${QUESTIONS.length} — ${q.theme}</div>
       <div class="q-text">${q.text}</div>
       <div class="options" id="opts-${qi}">
         ${q.options.map((o,oi)=>`
           <div class="option" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi})">
-            <div class="opt-letter">${letters[oi]}</div>
+            <div class="opt-letter">${LETTERS[oi]}</div>
             <div class="opt-text">${o}</div>
           </div>`).join('')}
       </div>
       <div class="feedback" id="fb-${qi}"></div>
-      <div class="btn-row" id="btnrow-${qi}" style="display:none">
-        <button class="btn btn-secondary" onclick="scrollToNext(${qi})">Próxima questão →</button>
-      </div>
-    `;
+      <div class="btn-row" id="btnrow-${qi}" style="display:none"></div>`;
     section.appendChild(card);
   });
 }
@@ -371,188 +579,351 @@ function selectOption(qi, oi) {
   if (userAnswers[qi] !== null) return;
   userAnswers[qi] = oi;
   answeredCount++;
-
-  const correct = questions[qi].correct;
+  const correct = QUESTIONS[qi].correct;
   const fb = document.getElementById('fb-'+qi);
   const btnrow = document.getElementById('btnrow-'+qi);
-
-  for (let i = 0; i < 4; i++) {
+  for (let i=0;i<4;i++) {
     const el = document.getElementById('opt-'+qi+'-'+i);
     el.classList.add('disabled');
-    if (i === oi && oi === correct) el.classList.add('selected-correct');
-    else if (i === oi && oi !== correct) el.classList.add('selected-wrong');
-    else if (i === correct) el.classList.add('show-correct');
+    if (i===oi && oi===correct) el.classList.add('selected-correct');
+    else if (i===oi) el.classList.add('selected-wrong');
+    else if (i===correct) el.classList.add('show-correct');
   }
-
-  const isCorrect = oi === correct;
-  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
-  fb.innerHTML = `<strong>${isCorrect ? '✓ Resposta correta!' : '✗ Resposta incorreta.'}</strong> ${isCorrect ? questions[qi].feedback.correct : questions[qi].feedback.wrong}<br><em style="font-size:.78rem;color:inherit;opacity:.75;margin-top:.4rem;display:block;">Referência: ${questions[qi].ref}</em>`;
-
+  const ok = oi===correct;
+  fb.className = 'feedback '+(ok?'correct':'wrong');
+  fb.innerHTML = `<strong>${ok?'✓ Resposta correta!':'✗ Resposta incorreta.'}</strong> ${ok?QUESTIONS[qi].feedback.correct:QUESTIONS[qi].feedback.wrong}<br><em style="font-size:.78rem;opacity:.75;display:block;margin-top:.4rem">📚 ${QUESTIONS[qi].ref}</em>`;
   updateProgress();
-
-  if (answeredCount === questions.length) {
+  if (answeredCount === QUESTIONS.length) {
     btnrow.innerHTML = '<button class="btn btn-primary" onclick="showResults()">Ver resultado final →</button>';
   } else {
-    btnrow.innerHTML = '<button class="btn btn-secondary" onclick="scrollToNext('+qi+')">Próxima questão →</button>';
+    btnrow.innerHTML = `<button class="btn btn-secondary" onclick="scrollToNext(${qi})">Próxima questão →</button>`;
   }
   btnrow.style.display = 'flex';
 }
 
 function updateProgress() {
-  const pct = Math.round((answeredCount / questions.length) * 100);
-  document.getElementById('progress-fill').style.width = pct + '%';
-  document.getElementById('progress-pct').textContent = pct + '%';
-  const next = Math.min(answeredCount + 1, questions.length);
-  document.getElementById('progress-text').textContent = answeredCount < questions.length
-    ? `Questão ${answeredCount+1} de ${questions.length}`
-    : `Todas as questões respondidas`;
+  const pct = Math.round((answeredCount/QUESTIONS.length)*100);
+  document.getElementById('progress-fill').style.width = pct+'%';
+  document.getElementById('progress-pct').textContent = pct+'%';
+  document.getElementById('progress-text').textContent = answeredCount < QUESTIONS.length
+    ? `Questão ${answeredCount+1} de ${QUESTIONS.length}`
+    : 'Todas as questões respondidas';
 }
 
 function scrollToNext(qi) {
   const next = document.getElementById('q-card-'+(qi+1));
-  if (next) next.scrollIntoView({behavior:'smooth', block:'start'});
+  if (next) next.scrollIntoView({behavior:'smooth',block:'start'});
 }
 
 function showResults() {
-  document.getElementById('quiz-section').style.display = 'none';
-  document.getElementById('progress-wrap').style.display = 'none';
+  document.getElementById('quiz-screen').style.display = 'none';
   const rs = document.getElementById('results-section');
   rs.style.display = 'block';
   rs.scrollIntoView({behavior:'smooth'});
 
-  const correct = userAnswers.filter((a,i) => a === questions[i].correct).length;
-  const wrong = questions.length - correct;
-  const pct = Math.round((correct / questions.length) * 100);
+  const correctCount = userAnswers.filter((a,i)=>a===QUESTIONS[i].correct).length;
+  const wrongCount = QUESTIONS.length - correctCount;
+  const pct = Math.round((correctCount/QUESTIONS.length)*100);
+  const nota = parseFloat(((correctCount/QUESTIONS.length)*10).toFixed(1));
 
-  document.getElementById('score-display').textContent = correct + '/' + questions.length;
-  document.getElementById('stat-correct').textContent = correct;
-  document.getElementById('stat-wrong').textContent = wrong;
-  document.getElementById('stat-pct').textContent = pct + '%';
+  document.getElementById('score-display').textContent = correctCount+'/'+QUESTIONS.length;
+  document.getElementById('stat-correct').textContent = correctCount;
+  document.getElementById('stat-wrong').textContent = wrongCount;
+  document.getElementById('stat-pct').textContent = pct+'%';
 
-  let msg = '';
-  if (pct >= 83) msg = 'Excelente! Você demonstrou domínio dos conceitos de contabilidade gerencial e planejamento estratégico.';
-  else if (pct >= 50) msg = 'Bom desempenho! Revise os temas das questões erradas para aprofundar o conhecimento.';
-  else msg = 'Continue estudando! Os artigos de base trazem todos os conceitos necessários para avançar.';
+  let msg = pct>=83 ? 'Excelente! Você demonstrou domínio dos conceitos.'
+    : pct>=50 ? 'Bom desempenho! Revise os temas das questões erradas.'
+    : 'Continue estudando! Os artigos de base trazem todos os conceitos necessários.';
   document.getElementById('score-msg').textContent = msg;
 
-  buildGabarito(correct);
-  buildCharts(correct, wrong, pct);
+  // Build result payload
+  resultPayload = {
+    meta: {
+      quiz: "Contabilidade Gerencial & Planejamento Estratégico",
+      nivel: "Básico",
+      gerado_em: new Date().toLocaleString('pt-BR')
+    },
+    aluno: { nome: studentName, ra: studentRA || "—" },
+    resultado: {
+      acertos: correctCount,
+      erros: wrongCount,
+      total: QUESTIONS.length,
+      aproveitamento_pct: pct,
+      nota_10: nota,
+      situacao: nota >= 6 ? "Aprovado" : "Recuperação"
+    },
+    respostas: QUESTIONS.map((q,i)=>({
+      questao: i+1,
+      tema: q.theme,
+      resposta_aluno: LETTERS[userAnswers[i]],
+      resposta_correta: LETTERS[q.correct],
+      correta: userAnswers[i]===q.correct,
+      referencia: q.ref
+    }))
+  };
+
+  // Save to localStorage
+  saveToStorage(resultPayload);
+
+  buildGabarito();
+  buildCharts(correctCount);
 }
 
-function buildGabarito(correct) {
-  const list = document.getElementById('gabarito-list');
-  const letters = ['A','B','C','D'];
-  list.innerHTML = questions.map((q,qi) => {
+function buildGabarito() {
+  document.getElementById('gabarito-list').innerHTML = QUESTIONS.map((q,qi)=>{
     const ua = userAnswers[qi];
-    const ok = ua === q.correct;
+    const ok = ua===q.correct;
     return `<div class="gab-item">
       <div class="gab-header">
         <span class="gab-num">Questão ${qi+1}</span>
         <span class="gab-badge ${ok?'correct':'wrong'}">${ok?'✓ Correta':'✗ Incorreta'}</span>
       </div>
       <div class="gab-q">${q.text}</div>
-      <div class="gab-answer">Gabarito: <span>${letters[q.correct]}. ${q.options[q.correct]}</span></div>
-      ${!ok ? `<div class="gab-answer" style="color:var(--wrong)">Sua resposta: ${letters[ua]}. ${q.options[ua]}</div>` : ''}
+      <div class="gab-answer">Gabarito: <span>${LETTERS[q.correct]}. ${q.options[q.correct]}</span></div>
+      ${!ok?`<div class="gab-answer" style="color:var(--wrong)">Sua resposta: ${LETTERS[ua]}. ${q.options[ua]}</div>`:''}
       <div class="gab-ref">📚 ${q.ref}</div>
     </div>`;
   }).join('');
 }
 
-function buildCharts(correctCount, wrongCount, pct) {
-  const themeScores = questions.map((q,i) => userAnswers[i] === q.correct ? 100 : 0);
-
+function buildCharts(correctCount) {
+  const scores = QUESTIONS.map((q,i)=>userAnswers[i]===q.correct?100:0);
   const rctx = document.getElementById('radarChart').getContext('2d');
   if (chartRadar) chartRadar.destroy();
-  chartRadar = new Chart(rctx, {
-    type: 'radar',
-    data: {
-      labels: themeLabels,
-      datasets: [{
-        label: 'Seu desempenho (%)',
-        data: themeScores,
-        backgroundColor: 'rgba(45,90,61,0.15)',
-        borderColor: '#2D5A3D',
-        pointBackgroundColor: '#2D5A3D',
-        pointRadius: 5,
-        borderWidth: 2
-      }, {
-        label: 'Desempenho ideal',
-        data: Array(6).fill(100),
-        backgroundColor: 'rgba(196,135,58,0.08)',
-        borderColor: '#C4873A',
-        pointRadius: 0,
-        borderWidth: 1,
-        borderDash: [4,4]
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        r: {
-          min: 0, max: 100,
-          ticks: { display: false },
-          grid: { color: 'rgba(0,0,0,0.07)' },
-          pointLabels: { font: { size: 11, family: "'DM Sans'" }, color: '#5C5650' }
-        }
-      },
-      plugins: {
-        legend: { position: 'bottom', labels: { font: { size: 11 }, color: '#5C5650', boxWidth: 12 } }
-      }
-    }
-  });
+  chartRadar = new Chart(rctx,{type:'radar',data:{
+    labels:QUESTIONS.map(q=>q.theme),
+    datasets:[
+      {label:'Seu desempenho',data:scores,backgroundColor:'rgba(45,90,61,.15)',borderColor:'#2D5A3D',pointBackgroundColor:'#2D5A3D',pointRadius:5,borderWidth:2},
+      {label:'Ideal',data:Array(6).fill(100),backgroundColor:'rgba(196,135,58,.08)',borderColor:'#C4873A',pointRadius:0,borderWidth:1,borderDash:[4,4]}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{font:{size:11,family:"'DM Sans'"},color:'#5C5650'}}},plugins:{legend:{position:'bottom',labels:{font:{size:11},color:'#5C5650',boxWidth:12}}}}});
 
   const bctx = document.getElementById('barChart').getContext('2d');
   if (chartBar) chartBar.destroy();
-  chartBar = new Chart(bctx, {
-    type: 'bar',
-    data: {
-      labels: questions.map((_,i) => 'Q' + (i+1)),
-      datasets: [{
-        label: 'Acerto',
-        data: questions.map((q,i) => userAnswers[i] === q.correct ? 1 : 0),
-        backgroundColor: '#2D5A3D',
-        borderRadius: 6
-      }, {
-        label: 'Erro',
-        data: questions.map((q,i) => userAnswers[i] !== q.correct ? 1 : 0),
-        backgroundColor: '#8B2B2B',
-        borderRadius: 6
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      scales: {
-        x: { stacked: true, grid: { display: false }, ticks: { color: '#9A9490' } },
-        y: { stacked: true, display: false, max: 1.4 }
-      },
-      plugins: {
-        legend: { position: 'bottom', labels: { font: { size: 11 }, color: '#5C5650', boxWidth: 12 } },
-        tooltip: {
-          callbacks: {
-            label: ctx => ctx.dataset.label + ': ' + (ctx.raw === 1 ? 'Sim' : 'Não')
-          }
-        }
-      }
-    }
-  });
+  chartBar = new Chart(bctx,{type:'bar',data:{
+    labels:QUESTIONS.map((_,i)=>'Q'+(i+1)),
+    datasets:[
+      {label:'Acerto',data:QUESTIONS.map((q,i)=>userAnswers[i]===q.correct?1:0),backgroundColor:'#2D5A3D',borderRadius:6},
+      {label:'Erro',data:QUESTIONS.map((q,i)=>userAnswers[i]!==q.correct?1:0),backgroundColor:'#8B2B2B',borderRadius:6}
+    ]
+  },options:{responsive:true,maintainAspectRatio:false,scales:{x:{stacked:true,grid:{display:false},ticks:{color:'#9A9490'}},y:{stacked:true,display:false,max:1.4}},plugins:{legend:{position:'bottom',labels:{font:{size:11},color:'#5C5650',boxWidth:12}}}}});
+}
+
+function downloadResult() {
+  if (!resultPayload) return;
+  const filename = `quiz_${studentName.replace(/\s+/g,'_')}_${new Date().toISOString().slice(0,10)}.json`;
+  const blob = new Blob([JSON.stringify(resultPayload, null, 2)], {type:'application/json'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = filename;
+  a.click();
 }
 
 function restartQuiz() {
-  userAnswers = Array(questions.length).fill(null);
+  userAnswers = Array(QUESTIONS.length).fill(null);
   answeredCount = 0;
+  studentName = ''; studentRA = '';
+  resultPayload = null;
   document.getElementById('results-section').style.display = 'none';
-  document.getElementById('quiz-section').style.display = 'block';
-  document.getElementById('progress-wrap').style.display = 'block';
-  document.getElementById('progress-fill').style.width = '0%';
-  document.getElementById('progress-pct').textContent = '0%';
-  document.getElementById('progress-text').textContent = 'Questão 1 de 6';
-  buildQuiz();
-  window.scrollTo({top:0, behavior:'smooth'});
+  document.getElementById('quiz-screen').style.display = 'none';
+  document.getElementById('entry-screen').style.display = 'block';
+  document.getElementById('inp-name').value = '';
+  document.getElementById('inp-ra').value = '';
+  window.scrollTo({top:0,behavior:'smooth'});
 }
 
-buildQuiz();
+// ===== STORAGE =====
+function saveToStorage(payload) {
+  let all = getStoredResults();
+  const key = payload.aluno.nome.toLowerCase()+'_'+payload.aluno.ra;
+  const idx = all.findIndex(r=>r.aluno.nome.toLowerCase()+'_'+r.aluno.ra === key);
+  if (idx>=0) all[idx] = payload; else all.push(payload);
+  localStorage.setItem(STORAGE_KEY, JSON.stringify(all));
+}
+
+function getStoredResults() {
+  try { return JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]'); } catch(e){return[];}
+}
+
+// ===== PROFESSOR =====
+function goProf() {
+  document.getElementById('quiz-app').style.display = 'none';
+  document.getElementById('prof-panel').style.display = 'block';
+  document.getElementById('prof-login').style.display = 'block';
+  document.getElementById('prof-dashboard').style.display = 'none';
+  document.getElementById('prof-pw').value = '';
+  document.getElementById('pw-error').style.display = 'none';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function checkPw() {
+  const pw = document.getElementById('prof-pw').value;
+  if (pw === PROF_PASSWORD) {
+    document.getElementById('prof-login').style.display = 'none';
+    document.getElementById('prof-dashboard').style.display = 'block';
+    loadProfDashboard();
+  } else {
+    document.getElementById('pw-error').style.display = 'block';
+    document.getElementById('prof-pw').value = '';
+    document.getElementById('prof-pw').focus();
+  }
+}
+
+function backToQuiz() {
+  document.getElementById('prof-panel').style.display = 'none';
+  document.getElementById('quiz-app').style.display = 'block';
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+function loadProfDashboard() {
+  const results = getStoredResults();
+  renderProfStats(results);
+  renderTable();
+  renderProfCharts(results);
+}
+
+function renderProfStats(results) {
+  const n = results.length;
+  const avg = n ? (results.reduce((s,r)=>s+r.resultado.nota_10,0)/n).toFixed(1) : '—';
+  const aprovados = results.filter(r=>r.resultado.nota_10>=6).length;
+  const temas = Array(6).fill(0);
+  results.forEach(r=>r.respostas.forEach((a,i)=>{if(a.correta)temas[i]++;}));
+  const worstIdx = n ? temas.indexOf(Math.min(...temas)) : -1;
+  const worstTheme = worstIdx>=0 ? QUESTIONS[worstIdx].theme : '—';
+  document.getElementById('prof-stats-grid').innerHTML = `
+    <div class="prof-stat"><div class="prof-stat-val">${n}</div><div class="prof-stat-lbl">Alunos</div></div>
+    <div class="prof-stat"><div class="prof-stat-val">${avg}</div><div class="prof-stat-lbl">Média da turma</div></div>
+    <div class="prof-stat"><div class="prof-stat-val">${aprovados}</div><div class="prof-stat-lbl">Aprovados (&ge;6)</div></div>
+    <div class="prof-stat"><div class="prof-stat-val" style="font-size:1rem;padding-top:.4rem">${worstTheme}</div><div class="prof-stat-lbl">Tema mais difícil</div></div>`;
+}
+
+function renderTable() {
+  const results = getStoredResults();
+  const q = document.getElementById('prof-search').value.toLowerCase();
+  const onlyWrong = document.getElementById('filter-wrong').checked;
+  let filtered = results.filter(r=>{
+    const match = r.aluno.nome.toLowerCase().includes(q)||(r.aluno.ra||'').toLowerCase().includes(q);
+    const hw = r.resultado.erros > 0;
+    return match && (!onlyWrong || hw);
+  });
+
+  const tbody = document.getElementById('prof-tbody');
+  const empty = document.getElementById('prof-empty');
+
+  if (!filtered.length) {
+    tbody.innerHTML='';
+    empty.style.display='block';
+    return;
+  }
+  empty.style.display='none';
+
+  tbody.innerHTML = filtered.map((r,ri)=>{
+    const nota = r.resultado.nota_10;
+    const pill = nota>=7?'pill-green':nota>=5?'pill-amber':'pill-red';
+    const sit = nota>=6?'Aprovado':'Recuperação';
+    const sitPill = nota>=6?'pill-green':'pill-red';
+    const detail = r.respostas.map((a,i)=>`
+      <div class="dg-cell ${a.correta?'ok':'no'}">
+        <div class="dg-q">Q${i+1}</div>
+        <div class="dg-a">${a.resposta_aluno}</div>
+        <div style="font-size:.65rem;color:inherit;opacity:.7">${a.correta?'✓':'✗ '+a.resposta_correta}</div>
+      </div>`).join('');
+    return `
+      <tr onclick="toggleDetail(${ri})" style="cursor:pointer">
+        <td style="color:var(--ink3);font-size:.8rem">▶</td>
+        <td><strong>${r.aluno.nome}</strong></td>
+        <td style="color:var(--ink3)">${r.aluno.ra||'—'}</td>
+        <td style="color:var(--ink3);font-size:.82rem">${r.meta.gerado_em}</td>
+        <td>${r.resultado.acertos}/${r.resultado.total}</td>
+        <td><span class="pill ${pill}">${nota}</span></td>
+        <td><span class="pill ${sitPill}">${sit}</span></td>
+      </tr>
+      <tr class="detail-row" id="detail-${ri}">
+        <td colspan="7">
+          <div style="font-size:.78rem;color:var(--ink3);margin-bottom:.4rem">Respostas por questão (clique na linha para recolher):</div>
+          <div class="detail-grid">${detail}</div>
+        </td>
+      </tr>`;
+  }).join('');
+}
+
+function toggleDetail(ri) {
+  const row = document.getElementById('detail-'+ri);
+  row.style.display = row.style.display==='table-row'?'none':'table-row';
+}
+
+function renderProfCharts(results) {
+  const n = results.length || 1;
+  const themeScores = QUESTIONS.map((_,i)=>{
+    const acc = results.filter(r=>r.respostas[i].correta).length;
+    return Math.round((acc/n)*100);
+  });
+
+  const prc = document.getElementById('profRadar').getContext('2d');
+  if (profRadarChart) profRadarChart.destroy();
+  profRadarChart = new Chart(prc,{type:'radar',data:{
+    labels:QUESTIONS.map(q=>q.theme),
+    datasets:[{label:'Acertos da turma (%)',data:themeScores,backgroundColor:'rgba(26,46,74,.12)',borderColor:'#1A2E4A',pointBackgroundColor:'#1A2E4A',pointRadius:4,borderWidth:2}]
+  },options:{responsive:true,maintainAspectRatio:false,scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(0,0,0,.07)'},pointLabels:{font:{size:10,family:"'DM Sans'"},color:'#5C5650'}}},plugins:{legend:{display:false}}}});
+
+  const buckets = {'0–3':0,'4–5':0,'6–7':0,'8–10':0};
+  results.forEach(r=>{
+    const n10=r.resultado.nota_10;
+    if(n10<=3)buckets['0–3']++;
+    else if(n10<=5)buckets['4–5']++;
+    else if(n10<=7)buckets['6–7']++;
+    else buckets['8–10']++;
+  });
+  const dc = document.getElementById('profDist').getContext('2d');
+  if (profDistChart) profDistChart.destroy();
+  profDistChart = new Chart(dc,{type:'bar',data:{
+    labels:Object.keys(buckets),
+    datasets:[{label:'Alunos',data:Object.values(buckets),backgroundColor:['#8B2B2B','#C4873A','#2D5A3D','#1A2E4A'],borderRadius:6}]
+  },options:{responsive:true,maintainAspectRatio:false,scales:{x:{grid:{display:false},ticks:{color:'#9A9490'}},y:{ticks:{stepSize:1,color:'#9A9490'},grid:{color:'rgba(0,0,0,.05)'}}},plugins:{legend:{display:false}}}});
+}
+
+function loadFromFile() { document.getElementById('file-input').click(); }
+
+function handleFileLoad(event) {
+  const file = event.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const data = JSON.parse(e.target.result);
+      const payload = Array.isArray(data) ? data : [data];
+      payload.forEach(p => { if(p.aluno && p.resultado && p.respostas) saveToStorage(p); });
+      loadProfDashboard();
+      alert(`✓ ${payload.length} registro(s) carregado(s) com sucesso.`);
+    } catch(err) { alert('Arquivo inválido. Certifique-se de usar o arquivo .json gerado pelo quiz.'); }
+  };
+  reader.readAsText(file);
+  event.target.value = '';
+}
+
+function exportAllCSV() {
+  const results = getStoredResults();
+  if (!results.length) { alert('Nenhum registro para exportar.'); return; }
+  const header = ['Nome','RA','Data','Q1','Q2','Q3','Q4','Q5','Q6','Acertos','Nota','Situação'];
+  const rows = results.map(r=>[
+    r.aluno.nome, r.aluno.ra, r.meta.gerado_em,
+    ...r.respostas.map(a=>a.resposta_aluno+(a.correta?'✓':'✗')),
+    r.resultado.acertos, r.resultado.nota_10, r.resultado.situacao
+  ]);
+  const csv = [header,...rows].map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const blob = new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'});
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(blob);
+  a.download = `turma_quiz_${new Date().toISOString().slice(0,10)}.csv`;
+  a.click();
+}
+
+function clearAllData() {
+  if (confirm('Apagar todos os registros armazenados? Esta ação não pode ser desfeita.')) {
+    localStorage.removeItem(STORAGE_KEY);
+    loadProfDashboard();
+  }
+}
 </script>
 </body>
 </html>
