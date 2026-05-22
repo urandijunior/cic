@@ -1,0 +1,558 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Quiz — Contabilidade Gerencial & Planejamento Estratégico</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#F7F4EE;
+  --surface:#FFFFFF;
+  --surface2:#F0ECE4;
+  --ink:#1A1714;
+  --ink2:#5C5650;
+  --ink3:#9A9490;
+  --accent:#2D5A3D;
+  --accent-light:#EAF2EC;
+  --accent2:#C4873A;
+  --accent2-light:#FBF3E8;
+  --wrong:#8B2B2B;
+  --wrong-light:#FAEAEA;
+  --border:#DDD8CF;
+  --radius:12px;
+  --serif:'DM Serif Display',Georgia,serif;
+  --sans:'DM Sans',system-ui,sans-serif;
+}
+body{background:var(--bg);font-family:var(--sans);color:var(--ink);min-height:100vh;line-height:1.6;}
+.page{max-width:780px;margin:0 auto;padding:2rem 1.5rem 4rem;}
+
+/* HEADER */
+header{text-align:center;padding:3rem 0 2rem;border-bottom:1.5px solid var(--border);margin-bottom:2.5rem;}
+.tag{display:inline-block;background:var(--accent);color:#fff;font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:4px 14px;border-radius:20px;margin-bottom:1.2rem;}
+header h1{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.6rem);font-weight:400;line-height:1.2;color:var(--ink);margin-bottom:.6rem;}
+header h1 em{font-style:italic;color:var(--accent);}
+header p{color:var(--ink2);font-size:.95rem;max-width:520px;margin:0 auto;}
+
+/* CASE STUDY */
+.case-box{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:2.5rem;position:relative;overflow:hidden;}
+.case-box::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--accent2);}
+.case-label{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent2);margin-bottom:.8rem;}
+.case-box h2{font-family:var(--serif);font-size:1.25rem;font-weight:400;margin-bottom:1rem;color:var(--ink);}
+.case-box p{font-size:.92rem;color:var(--ink2);margin-bottom:.7rem;}
+.case-box p:last-child{margin-bottom:0;}
+.case-box strong{color:var(--ink);font-weight:600;}
+
+/* PROGRESS */
+.progress-bar{background:var(--surface2);border-radius:20px;height:6px;margin-bottom:2rem;overflow:hidden;}
+.progress-fill{height:100%;background:linear-gradient(90deg,var(--accent),var(--accent2));border-radius:20px;transition:width .5s ease;}
+.progress-label{display:flex;justify-content:space-between;align-items:center;margin-bottom:.5rem;}
+.progress-label span{font-size:.82rem;color:var(--ink3);}
+.progress-label strong{font-size:.82rem;color:var(--ink2);}
+
+/* QUESTIONS */
+.question-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin-bottom:1.5rem;transition:box-shadow .2s;}
+.question-card.active{box-shadow:0 4px 24px rgba(0,0,0,.07);}
+.q-number{font-size:11px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3);margin-bottom:.6rem;}
+.q-text{font-family:var(--serif);font-size:1.1rem;font-weight:400;color:var(--ink);margin-bottom:1.4rem;line-height:1.45;}
+.options{display:flex;flex-direction:column;gap:.6rem;}
+.option{display:flex;align-items:flex-start;gap:.85rem;padding:.85rem 1rem;border:1px solid var(--border);border-radius:8px;cursor:pointer;transition:all .18s;background:var(--bg);}
+.option:hover:not(.disabled){border-color:var(--accent);background:var(--accent-light);}
+.option.disabled{cursor:default;}
+.option.selected-correct{border-color:var(--accent);background:var(--accent-light);}
+.option.selected-wrong{border-color:var(--wrong);background:var(--wrong-light);}
+.option.show-correct{border-color:var(--accent);background:var(--accent-light);}
+.opt-letter{min-width:28px;height:28px;border-radius:50%;background:var(--surface2);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.78rem;font-weight:600;color:var(--ink2);transition:all .18s;flex-shrink:0;margin-top:1px;}
+.option.selected-correct .opt-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+.option.selected-wrong .opt-letter{background:var(--wrong);color:#fff;border-color:var(--wrong);}
+.option.show-correct .opt-letter{background:var(--accent);color:#fff;border-color:var(--accent);}
+.opt-text{font-size:.9rem;color:var(--ink2);line-height:1.45;}
+.option.selected-correct .opt-text,.option.show-correct .opt-text{color:var(--ink);font-weight:500;}
+.feedback{display:none;margin-top:1rem;padding:.9rem 1rem;border-radius:8px;font-size:.85rem;line-height:1.5;}
+.feedback.correct{display:block;background:var(--accent-light);border:1px solid #B8D8C0;color:#1E4028;}
+.feedback.wrong{display:block;background:var(--wrong-light);border:1px solid #DBA9A9;color:#5C1A1A;}
+.feedback strong{font-weight:600;}
+
+/* BUTTONS */
+.btn{display:inline-flex;align-items:center;gap:.5rem;padding:.7rem 1.6rem;border-radius:8px;border:none;cursor:pointer;font-family:var(--sans);font-size:.9rem;font-weight:500;transition:all .18s;}
+.btn-primary{background:var(--accent);color:#fff;}
+.btn-primary:hover{background:#234A31;}
+.btn-secondary{background:var(--surface2);color:var(--ink2);border:1px solid var(--border);}
+.btn-secondary:hover{background:var(--border);}
+.btn-row{display:flex;gap:.75rem;margin-top:1.2rem;flex-wrap:wrap;}
+
+/* RESULTS */
+#results-section{display:none;}
+.results-header{text-align:center;padding:2rem 0 1.5rem;}
+.results-header h2{font-family:var(--serif);font-size:2rem;font-weight:400;margin-bottom:.5rem;}
+.score-big{font-size:3.5rem;font-weight:300;font-family:var(--serif);color:var(--accent);}
+.score-sub{font-size:.9rem;color:var(--ink3);}
+.stats-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1rem;margin:1.5rem 0;}
+.stat-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.2rem;text-align:center;}
+.stat-val{font-family:var(--serif);font-size:1.8rem;color:var(--ink);}
+.stat-val.green{color:var(--accent);}
+.stat-val.red{color:var(--wrong);}
+.stat-val.amber{color:var(--accent2);}
+.stat-label{font-size:.78rem;color:var(--ink3);text-transform:uppercase;letter-spacing:.08em;margin-top:.3rem;}
+
+/* CHART */
+.chart-section{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.8rem 2rem;margin:1.5rem 0;}
+.chart-section h3{font-family:var(--serif);font-size:1.2rem;font-weight:400;margin-bottom:1.2rem;color:var(--ink);}
+.chart-wrapper{position:relative;height:280px;}
+
+/* GABARITO */
+.gabarito-section{margin-top:2rem;}
+.gabarito-section h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);}
+.gab-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1rem;}
+.gab-header{display:flex;align-items:center;gap:.8rem;margin-bottom:.6rem;}
+.gab-num{font-size:.78rem;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--ink3);}
+.gab-badge{font-size:.75rem;font-weight:600;padding:2px 10px;border-radius:20px;}
+.gab-badge.correct{background:var(--accent-light);color:var(--accent);}
+.gab-badge.wrong{background:var(--wrong-light);color:var(--wrong);}
+.gab-q{font-size:.88rem;font-weight:500;color:var(--ink);margin-bottom:.5rem;}
+.gab-answer{font-size:.85rem;color:var(--ink2);margin-bottom:.5rem;}
+.gab-answer span{font-weight:600;color:var(--accent);}
+.gab-ref{font-size:.8rem;color:var(--ink3);font-style:italic;}
+
+/* CITATIONS */
+.citations-section{margin-top:2rem;}
+.citations-section h3{font-family:var(--serif);font-size:1.3rem;font-weight:400;margin-bottom:1.2rem;padding-bottom:.6rem;border-bottom:1px solid var(--border);}
+.citation-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:1.4rem 1.6rem;margin-bottom:1rem;position:relative;overflow:hidden;}
+.citation-card::before{content:'';position:absolute;left:0;top:0;height:100%;width:3px;background:var(--accent2);}
+.citation-quote{font-family:var(--serif);font-size:1rem;font-style:italic;color:var(--ink);margin-bottom:.6rem;line-height:1.55;}
+.citation-author{font-size:.8rem;font-weight:600;color:var(--accent2);text-transform:uppercase;letter-spacing:.08em;}
+.citation-context{font-size:.82rem;color:var(--ink3);margin-top:.3rem;}
+
+/* RESTART */
+.restart-row{text-align:center;padding:2rem 0 1rem;}
+
+@media(max-width:520px){
+  .stats-grid{grid-template-columns:1fr 1fr;}
+  .case-box{padding:1.4rem 1.2rem;}
+  .question-card{padding:1.4rem 1.2rem;}
+}
+</style>
+</head>
+<body>
+<div class="page">
+
+<header>
+  <div class="tag">Exercício Aplicado — Nível Básico</div>
+  <h1>Contabilidade Gerencial &<br><em>Planejamento Estratégico</em></h1>
+  <p>Estudo de caso: Contador de MPE no setor de alimentos e bebidas — 6 questões com 4 alternativas</p>
+</header>
+
+<!-- CASE STUDY -->
+<div class="case-box">
+  <div class="case-label">📋 Estudo de Caso</div>
+  <h2>Sabores do Cerrado Ltda. — A chegada do novo contador</h2>
+  <p>A <strong>Sabores do Cerrado Ltda.</strong> é uma pequena empresa familiar localizada em Cuiabá–MT, com 11 anos de atividade e 22 funcionários. Produz conservas, polpas de frutas e geleias artesanais vendidas para supermercados regionais e feiras do produtor. O faturamento anual gira em torno de <strong>R$ 2,4 milhões</strong>.</p>
+  <p>Em março de 2025, a empresa contratou <strong>Mariana</strong>, recém-formada em Ciências Contábeis, como sua primeira contadora interna. Ao assumir o cargo, Mariana encontrou um cenário desafiador: nenhum orçamento formal, fluxo de caixa feito em caderno, sem indicadores de desempenho e decisões tomadas "de cabeça" pelos sócios. A empresa havia encerrado 2024 com prejuízo operacional de R$ 87 mil, apesar de ter crescido 14% em faturamento.</p>
+  <p>Os sócios pedem à Mariana que apresente, em 60 dias, um diagnóstico e um plano de ação. Ela decide estruturar a <strong>contabilidade gerencial</strong> como base para um <strong>planejamento estratégico</strong> formal. As questões a seguir acompanham as decisões de Mariana ao longo desse processo.</p>
+</div>
+
+<!-- PROGRESS -->
+<div id="progress-wrap">
+  <div class="progress-label">
+    <span id="progress-text">Questão 1 de 6</span>
+    <strong id="progress-pct">0%</strong>
+  </div>
+  <div class="progress-bar"><div class="progress-fill" id="progress-fill" style="width:0%"></div></div>
+</div>
+
+<!-- QUESTIONS -->
+<div id="quiz-section"></div>
+
+<!-- RESULTS (hidden initially) -->
+<div id="results-section">
+  <div class="results-header">
+    <h2>Resultado Final</h2>
+    <div class="score-big" id="score-display">0/6</div>
+    <div class="score-sub" id="score-msg"></div>
+  </div>
+
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-val green" id="stat-correct">0</div>
+      <div class="stat-label">Corretas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val red" id="stat-wrong">0</div>
+      <div class="stat-label">Incorretas</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-val amber" id="stat-pct">0%</div>
+      <div class="stat-label">Aproveitamento</div>
+    </div>
+  </div>
+
+  <div class="chart-section">
+    <h3>Desempenho por tema — eficiência das respostas</h3>
+    <div class="chart-wrapper"><canvas id="radarChart"></canvas></div>
+  </div>
+
+  <div class="chart-section">
+    <h3>Acertos × Erros por questão</h3>
+    <div class="chart-wrapper"><canvas id="barChart"></canvas></div>
+  </div>
+
+  <!-- CITATIONS -->
+  <div class="citations-section">
+    <h3>Reflexões teóricas sobre planejamento estratégico</h3>
+
+    <div class="citation-card">
+      <div class="citation-quote">"O planejamento não diz respeito a decisões futuras, mas às implicações futuras de decisões presentes."</div>
+      <div class="citation-author">Peter Drucker</div>
+      <div class="citation-context">A afirmação sublinha que o planejamento estratégico, como praticado por Mariana ao estruturar o orçamento e o fluxo de caixa da Sabores do Cerrado, não é exercício de adivinhação — é a disciplina de pensar hoje as consequências do que se decide fazer (ou não fazer). Drucker reforça que a contabilidade gerencial é o instrumento que transforma intenções em decisões rastreáveis.</div>
+    </div>
+
+    <div class="citation-card">
+      <div class="citation-quote">"Planejamento estratégico é o processo administrativo que proporciona sustentação metodológica para se estabelecer a melhor direção a ser seguida pela empresa, visando ao otimizado grau de interação com os fatores externos — não controláveis — e atuando de forma inovadora e diferenciada."</div>
+      <div class="citation-author">Djalma de Pinho Rebouças de Oliveira</div>
+      <div class="citation-context">Rebouças situa o planejamento estratégico como metodologia gerencial — não como intuição. A análise SWOT que Mariana propõe para a Sabores do Cerrado é exatamente esse instrumento de leitura do ambiente externo (volatilidade de matéria-prima, concorrência regional) e interno (capacidade produtiva, ausência de controles), traduzida em escolhas deliberadas.</div>
+    </div>
+
+    <div class="citation-card">
+      <div class="citation-quote">"A estratégia define como a organização pretende alcançar seus objetivos, quais os recursos necessários e o que deve ser feito para tornar esses objetivos realidade."</div>
+      <div class="citation-author">Idalberto Chiavenato</div>
+      <div class="citation-context">Chiavenato conecta estratégia à operação — exatamente o desafio de Mariana: traduzir o crescimento de 14% em faturamento em resultado positivo, identificando onde os recursos foram mal alocados. O Balanced Scorecard e os KPIs que ela implementa são a linguagem que converte a intenção estratégica dos sócios em métricas acompanháveis pelo dia a dia contábil.</div>
+    </div>
+  </div>
+
+  <!-- GABARITO -->
+  <div class="gabarito-section">
+    <h3>Gabarito comentado</h3>
+    <div id="gabarito-list"></div>
+  </div>
+
+  <div class="restart-row">
+    <button class="btn btn-primary" onclick="restartQuiz()">↩ Reiniciar exercício</button>
+  </div>
+</div>
+
+</div><!-- .page -->
+
+<script>
+const questions = [
+  {
+    theme: "Diagnóstico inicial",
+    text: "Ao analisar os registros da Sabores do Cerrado, Mariana percebe que a empresa cresceu em faturamento mas fechou no prejuízo. Qual ferramenta de contabilidade gerencial ela deve priorizar primeiro para entender onde o dinheiro está sendo perdido?",
+    options: [
+      "Elaborar imediatamente um planejamento estratégico de cinco anos com metas de expansão.",
+      "Construir uma análise de custos e calcular a margem de contribuição por linha de produto.",
+      "Contratar uma auditoria externa para verificar possíveis irregularidades fiscais.",
+      "Aumentar o preço dos produtos para compensar o prejuízo registrado em 2024."
+    ],
+    correct: 1,
+    feedback: {
+      correct: "Correto! A margem de contribuição revela quanto cada produto contribui para cobrir os custos fixos. Sem esse diagnóstico, qualquer planejamento estratégico fica sem base financeira real — exatamente o que os artigos estudados apontam como pré-requisito da integração entre contabilidade gerencial e estratégia.",
+      wrong: "A alternativa correta é B. Antes de qualquer estratégia de longo prazo, Mariana precisa entender a estrutura de custos. A análise de margem de contribuição é o ponto de partida da contabilidade gerencial para diagnóstico de resultado."
+    },
+    ref: "Beuren, Souza e Feuser (2017); Artigo 1 — seção 4, Resultados e Discussão."
+  },
+  {
+    theme: "Ferramentas gerenciais",
+    text: "Os sócios pedem previsibilidade financeira para os próximos 90 dias, pois há vencimentos bancários importantes nesse período. Qual instrumento da contabilidade gerencial atende diretamente essa necessidade?",
+    options: [
+      "Balanced Scorecard (BSC), com indicadores de aprendizado e crescimento.",
+      "Análise SWOT atualizada com as ameaças do mercado regional.",
+      "Fluxo de caixa projetado para os próximos 90 dias, revisado mensalmente.",
+      "Relatório de participação de mercado frente aos concorrentes locais."
+    ],
+    correct: 2,
+    feedback: {
+      correct: "Correto! O fluxo de caixa projetado é o instrumento direto para previsibilidade de curto prazo. O Artigo 1 relata exatamente essa prática na empresa estudada, que passou a projetar o caixa para 90 dias e aumentou em 18% a previsibilidade financeira.",
+      wrong: "A alternativa correta é C. O fluxo de caixa projetado responde à pergunta 'teremos dinheiro para pagar as contas nos próximos meses?'. As demais alternativas são ferramentas valiosas, mas não endereçam a necessidade imediata de previsibilidade de caixa."
+    },
+    ref: "Artigo 1 — seção 4; Padoveze (2010)."
+  },
+  {
+    theme: "Planejamento estratégico",
+    text: "Para estruturar o planejamento estratégico formal da Sabores do Cerrado, Mariana propõe uma análise do ambiente interno e externo. Qual ferramenta é mais indicada para isso no contexto de uma pequena empresa?",
+    options: [
+      "Análise SWOT, identificando forças, fraquezas, oportunidades e ameaças.",
+      "Diagrama de Gantt para controle do cronograma de produção.",
+      "Demonstração do Resultado do Exercício (DRE) do último trimestre.",
+      "Planilha de controle de estoque com alertas de reposição automática."
+    ],
+    correct: 0,
+    feedback: {
+      correct: "Correto! A matriz SWOT é o instrumento clássico de análise de ambiente para o planejamento estratégico. O Artigo 1 mostra que a empresa estudada a utiliza semestralmente, e o Artigo 2 reforça que sem leitura do ambiente interno e externo o planejamento torna-se meramente teórico.",
+      wrong: "A alternativa correta é A. As outras ferramentas citadas têm utilidade operacional, mas a SWOT é o instrumento que conecta o diagnóstico ambiental ao planejamento estratégico — pilar central dos dois artigos estudados."
+    },
+    ref: "Oliveira Júnior et al. (2023); Artigo 2 — seção 2."
+  },
+  {
+    theme: "Gestão por resultados",
+    text: "Mariana quer monitorar se as ações do planejamento estão gerando resultado ao longo do tempo. Qual prática de gestão por resultados ela deve adotar para garantir esse acompanhamento contínuo?",
+    options: [
+      "Realizar uma única reunião de avaliação ao final do ano fiscal.",
+      "Definir indicadores-chave de desempenho (KPIs) e revisar o orçamento trimestralmente.",
+      "Delegar o acompanhamento dos resultados exclusivamente ao escritório contábil externo.",
+      "Aguardar a publicação do balanço patrimonial anual para tomar decisões estratégicas."
+    ],
+    correct: 1,
+    feedback: {
+      correct: "Correto! A gestão por resultados exige monitoramento contínuo — não apenas ao final do ano. KPIs periódicos e revisão orçamentária trimestral são práticas que o Artigo 2 destaca como essenciais para que o planejamento se traduza em resultados reais.",
+      wrong: "A alternativa correta é B. Aguardar o encerramento do exercício para avaliar resultados é exatamente o oposto do que a literatura recomenda. O Artigo 2 enfatiza que o ciclo de aprendizagem estratégica exige dados contábeis frequentes alimentando revisões contínuas."
+    },
+    ref: "Ramos (2023); Artigo 2 — seção 3; Souza e Santos (2024)."
+  },
+  {
+    theme: "Liderança e cultura organizacional",
+    text: "Os sócios mostram resistência às mudanças propostas por Mariana, argumentando que 'sempre fizeram assim'. De acordo com os artigos estudados, qual fator organizacional ela deve abordar para que o planejamento estratégico seja efetivo?",
+    options: [
+      "Impor as ferramentas gerenciais independentemente da concordância dos sócios.",
+      "Abandonar o planejamento formal e manter os processos informais existentes.",
+      "Trabalhar a cultura organizacional e engajar a liderança como mediadora das mudanças.",
+      "Terceirizar toda a gestão financeira para uma consultoria externa especializada."
+    ],
+    correct: 2,
+    feedback: {
+      correct: "Correto! O Artigo 2 dedica uma seção inteira ao papel da liderança e da cultura organizacional. Sem o engajamento dos sócios, as ferramentas gerenciais não produzem efeito — cultura e estratégia se inter-relacionam e a liderança é o elo entre discurso estratégico e ações cotidianas.",
+      wrong: "A alternativa correta é C. A literatura é clara: o planejamento estratégico por si só não garante resultados. A mediação humana da liderança e a cultura organizacional condicionam a efetividade de qualquer ferramenta gerencial."
+    },
+    ref: "Cândido (2023); Leite (2024); Artigo 2 — seção 4."
+  },
+  {
+    theme: "Sustentabilidade financeira",
+    text: "Após três meses de trabalho, Mariana apresenta os primeiros resultados: redução de desperdícios na produção e melhoria no giro de estoque. Os sócios perguntam: qual é o papel da contabilidade gerencial no longo prazo da empresa? A resposta mais adequada é:",
+    options: [
+      "A contabilidade gerencial serve apenas para cumprir obrigações fiscais e legais.",
+      "Ela deve ser usada apenas em momentos de crise, como aconteceu em 2024.",
+      "É um instrumento prospectivo que orienta decisões estratégicas e fortalece a sustentabilidade financeira.",
+      "Seu papel se limita ao registro dos fatos passados para prestação de contas aos sócios."
+    ],
+    correct: 2,
+    feedback: {
+      correct: "Correto! Esta é a conclusão central de ambos os artigos: a contabilidade gerencial não deve ser vista apenas como registro do passado ou obrigação fiscal, mas como instrumento prospectivo que orienta decisões estratégicas e sustenta a saúde financeira da organização a longo prazo.",
+      wrong: "A alternativa correta é C. Ambos os artigos convergem para essa conclusão: a contabilidade gerencial é ferramenta de futuro, não de passado. Usá-la apenas em crises ou para fins fiscais desperdiça seu maior valor — apoiar decisões estratégicas contínuas."
+    },
+    ref: "Costa e Ferreira (2024); Artigo 1 — seção 5; Artigo 2 — seção 5."
+  }
+];
+
+const themeLabels = questions.map(q => q.theme);
+let userAnswers = Array(questions.length).fill(null);
+let answeredCount = 0;
+let chartRadar = null;
+let chartBar = null;
+
+function buildQuiz() {
+  const section = document.getElementById('quiz-section');
+  section.innerHTML = '';
+  questions.forEach((q, qi) => {
+    const card = document.createElement('div');
+    card.className = 'question-card' + (qi === 0 ? ' active' : '');
+    card.id = 'q-card-' + qi;
+    const letters = ['A','B','C','D'];
+    card.innerHTML = `
+      <div class="q-number">Questão ${qi+1} de ${questions.length} — ${q.theme}</div>
+      <div class="q-text">${q.text}</div>
+      <div class="options" id="opts-${qi}">
+        ${q.options.map((o,oi)=>`
+          <div class="option" id="opt-${qi}-${oi}" onclick="selectOption(${qi},${oi})">
+            <div class="opt-letter">${letters[oi]}</div>
+            <div class="opt-text">${o}</div>
+          </div>`).join('')}
+      </div>
+      <div class="feedback" id="fb-${qi}"></div>
+      <div class="btn-row" id="btnrow-${qi}" style="display:none">
+        <button class="btn btn-secondary" onclick="scrollToNext(${qi})">Próxima questão →</button>
+      </div>
+    `;
+    section.appendChild(card);
+  });
+}
+
+function selectOption(qi, oi) {
+  if (userAnswers[qi] !== null) return;
+  userAnswers[qi] = oi;
+  answeredCount++;
+
+  const correct = questions[qi].correct;
+  const fb = document.getElementById('fb-'+qi);
+  const btnrow = document.getElementById('btnrow-'+qi);
+
+  for (let i = 0; i < 4; i++) {
+    const el = document.getElementById('opt-'+qi+'-'+i);
+    el.classList.add('disabled');
+    if (i === oi && oi === correct) el.classList.add('selected-correct');
+    else if (i === oi && oi !== correct) el.classList.add('selected-wrong');
+    else if (i === correct) el.classList.add('show-correct');
+  }
+
+  const isCorrect = oi === correct;
+  fb.className = 'feedback ' + (isCorrect ? 'correct' : 'wrong');
+  fb.innerHTML = `<strong>${isCorrect ? '✓ Resposta correta!' : '✗ Resposta incorreta.'}</strong> ${isCorrect ? questions[qi].feedback.correct : questions[qi].feedback.wrong}<br><em style="font-size:.78rem;color:inherit;opacity:.75;margin-top:.4rem;display:block;">Referência: ${questions[qi].ref}</em>`;
+
+  updateProgress();
+
+  if (answeredCount === questions.length) {
+    btnrow.innerHTML = '<button class="btn btn-primary" onclick="showResults()">Ver resultado final →</button>';
+  } else {
+    btnrow.innerHTML = '<button class="btn btn-secondary" onclick="scrollToNext('+qi+')">Próxima questão →</button>';
+  }
+  btnrow.style.display = 'flex';
+}
+
+function updateProgress() {
+  const pct = Math.round((answeredCount / questions.length) * 100);
+  document.getElementById('progress-fill').style.width = pct + '%';
+  document.getElementById('progress-pct').textContent = pct + '%';
+  const next = Math.min(answeredCount + 1, questions.length);
+  document.getElementById('progress-text').textContent = answeredCount < questions.length
+    ? `Questão ${answeredCount+1} de ${questions.length}`
+    : `Todas as questões respondidas`;
+}
+
+function scrollToNext(qi) {
+  const next = document.getElementById('q-card-'+(qi+1));
+  if (next) next.scrollIntoView({behavior:'smooth', block:'start'});
+}
+
+function showResults() {
+  document.getElementById('quiz-section').style.display = 'none';
+  document.getElementById('progress-wrap').style.display = 'none';
+  const rs = document.getElementById('results-section');
+  rs.style.display = 'block';
+  rs.scrollIntoView({behavior:'smooth'});
+
+  const correct = userAnswers.filter((a,i) => a === questions[i].correct).length;
+  const wrong = questions.length - correct;
+  const pct = Math.round((correct / questions.length) * 100);
+
+  document.getElementById('score-display').textContent = correct + '/' + questions.length;
+  document.getElementById('stat-correct').textContent = correct;
+  document.getElementById('stat-wrong').textContent = wrong;
+  document.getElementById('stat-pct').textContent = pct + '%';
+
+  let msg = '';
+  if (pct >= 83) msg = 'Excelente! Você demonstrou domínio dos conceitos de contabilidade gerencial e planejamento estratégico.';
+  else if (pct >= 50) msg = 'Bom desempenho! Revise os temas das questões erradas para aprofundar o conhecimento.';
+  else msg = 'Continue estudando! Os artigos de base trazem todos os conceitos necessários para avançar.';
+  document.getElementById('score-msg').textContent = msg;
+
+  buildGabarito(correct);
+  buildCharts(correct, wrong, pct);
+}
+
+function buildGabarito(correct) {
+  const list = document.getElementById('gabarito-list');
+  const letters = ['A','B','C','D'];
+  list.innerHTML = questions.map((q,qi) => {
+    const ua = userAnswers[qi];
+    const ok = ua === q.correct;
+    return `<div class="gab-item">
+      <div class="gab-header">
+        <span class="gab-num">Questão ${qi+1}</span>
+        <span class="gab-badge ${ok?'correct':'wrong'}">${ok?'✓ Correta':'✗ Incorreta'}</span>
+      </div>
+      <div class="gab-q">${q.text}</div>
+      <div class="gab-answer">Gabarito: <span>${letters[q.correct]}. ${q.options[q.correct]}</span></div>
+      ${!ok ? `<div class="gab-answer" style="color:var(--wrong)">Sua resposta: ${letters[ua]}. ${q.options[ua]}</div>` : ''}
+      <div class="gab-ref">📚 ${q.ref}</div>
+    </div>`;
+  }).join('');
+}
+
+function buildCharts(correctCount, wrongCount, pct) {
+  const themeScores = questions.map((q,i) => userAnswers[i] === q.correct ? 100 : 0);
+
+  const rctx = document.getElementById('radarChart').getContext('2d');
+  if (chartRadar) chartRadar.destroy();
+  chartRadar = new Chart(rctx, {
+    type: 'radar',
+    data: {
+      labels: themeLabels,
+      datasets: [{
+        label: 'Seu desempenho (%)',
+        data: themeScores,
+        backgroundColor: 'rgba(45,90,61,0.15)',
+        borderColor: '#2D5A3D',
+        pointBackgroundColor: '#2D5A3D',
+        pointRadius: 5,
+        borderWidth: 2
+      }, {
+        label: 'Desempenho ideal',
+        data: Array(6).fill(100),
+        backgroundColor: 'rgba(196,135,58,0.08)',
+        borderColor: '#C4873A',
+        pointRadius: 0,
+        borderWidth: 1,
+        borderDash: [4,4]
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        r: {
+          min: 0, max: 100,
+          ticks: { display: false },
+          grid: { color: 'rgba(0,0,0,0.07)' },
+          pointLabels: { font: { size: 11, family: "'DM Sans'" }, color: '#5C5650' }
+        }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, color: '#5C5650', boxWidth: 12 } }
+      }
+    }
+  });
+
+  const bctx = document.getElementById('barChart').getContext('2d');
+  if (chartBar) chartBar.destroy();
+  chartBar = new Chart(bctx, {
+    type: 'bar',
+    data: {
+      labels: questions.map((_,i) => 'Q' + (i+1)),
+      datasets: [{
+        label: 'Acerto',
+        data: questions.map((q,i) => userAnswers[i] === q.correct ? 1 : 0),
+        backgroundColor: '#2D5A3D',
+        borderRadius: 6
+      }, {
+        label: 'Erro',
+        data: questions.map((q,i) => userAnswers[i] !== q.correct ? 1 : 0),
+        backgroundColor: '#8B2B2B',
+        borderRadius: 6
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      scales: {
+        x: { stacked: true, grid: { display: false }, ticks: { color: '#9A9490' } },
+        y: { stacked: true, display: false, max: 1.4 }
+      },
+      plugins: {
+        legend: { position: 'bottom', labels: { font: { size: 11 }, color: '#5C5650', boxWidth: 12 } },
+        tooltip: {
+          callbacks: {
+            label: ctx => ctx.dataset.label + ': ' + (ctx.raw === 1 ? 'Sim' : 'Não')
+          }
+        }
+      }
+    }
+  });
+}
+
+function restartQuiz() {
+  userAnswers = Array(questions.length).fill(null);
+  answeredCount = 0;
+  document.getElementById('results-section').style.display = 'none';
+  document.getElementById('quiz-section').style.display = 'block';
+  document.getElementById('progress-wrap').style.display = 'block';
+  document.getElementById('progress-fill').style.width = '0%';
+  document.getElementById('progress-pct').textContent = '0%';
+  document.getElementById('progress-text').textContent = 'Questão 1 de 6';
+  buildQuiz();
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+buildQuiz();
+</script>
+</body>
+</html>
